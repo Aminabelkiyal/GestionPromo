@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.emsi.pfe.model.Client;
+import com.emsi.pfe.model.Coupons;
 import com.emsi.pfe.model.Magasin;
 import com.emsi.pfe.model.Produit;
 import com.emsi.pfe.model.Promotion;
 import com.emsi.pfe.service.ClientService;
+import com.emsi.pfe.service.CouponsService;
 import com.emsi.pfe.service.MagasinService;
 import com.emsi.pfe.service.ProduitService;
 import com.emsi.pfe.service.PromotionService;
@@ -34,6 +36,8 @@ public class AdminController {
 	 private PromotionService promotionService;
 	 @Autowired
 	 private ProduitService produitService;
+	 @Autowired
+	 private CouponsService couponsService;
 	   
 
 	    // Endpoint pour récupérer tous les clients
@@ -177,8 +181,8 @@ public class AdminController {
 	    
 	    // Endpoint pour récupérer tous les promotions
 	    @GetMapping("/produits")
-	    public List<Promotion> getAllProduits() {
-	        return promotionService.getAllPromotions();
+	    public List<Produit> getAllProduits() {
+	        return produitService.getAllProduits();
 	    }
 
 	    // Endpoint pour récupérer une promo par ID
@@ -217,5 +221,50 @@ public class AdminController {
 	        return ResponseEntity.noContent().build();
 	    }
 	    
+///////////////////////////////////////////////////////////////////////////
+	    
+	    
+	    
+	    // Endpoint pour récupérer tous les coupons
+	    @GetMapping("/coupons")
+	    public List<Coupons> getAllCoupons() {
+	        return couponsService.getAllCoupons();
+	    }
 
+	    // Endpoint pour récupérer un coupon  par ID
+	    @GetMapping("/coupons/{id}")
+	    public ResponseEntity<Coupons> getCouponsById(@PathVariable Long id) {
+	    	Coupons coupons = couponsService.getCouponsById(id);
+	        if (coupons != null) {
+	            return ResponseEntity.ok(coupons);
+	        } else {
+	            return ResponseEntity.notFound().build();
+	        }
+	    }
+
+	    // Endpoint pour créer coupon
+	    @PostMapping("/coupons")
+	    public ResponseEntity<Coupons> createCoupons(@RequestBody Coupons coupons) {
+	    	Coupons createdCoupons = couponsService.createCoupons(coupons);
+	        return ResponseEntity.status(HttpStatus.CREATED).body(createdCoupons);
+	    }
+
+	    // Endpoint pour mettre à jour  coupons
+	    @PutMapping("/coupons/{id}")
+	    public ResponseEntity<Coupons> updateCoupons(@PathVariable Long id, @RequestBody Coupons updatedCoupons) {
+	    	Coupons coupons = couponsService.updateCoupons(id, updatedCoupons);
+	        if (coupons != null) {
+	            return ResponseEntity.ok(coupons);
+	        } else {
+	            return ResponseEntity.notFound().build();
+	        }
+	    }
+
+	    // Endpoint pour supprimer coupon
+	    @DeleteMapping("/coupons/{id}")
+	    public ResponseEntity<Void> deleteCoupons(@PathVariable Long id) {
+	    	couponsService.deleteCoupons(id);
+	        return ResponseEntity.noContent().build();
+	    }
+	    
 }

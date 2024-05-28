@@ -39,17 +39,18 @@ public class Produit {
 	public void setCategorie(String categorie) {
 		this.categorie = categorie;
 	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
+	 
 	public double getPrix() {
 		return prix;
 	}
 	public void setPrix(double prix) {
 		this.prix = prix;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
     
 

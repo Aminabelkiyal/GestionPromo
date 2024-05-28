@@ -1,9 +1,13 @@
 package com.emsi.pfe.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Magasin {
@@ -14,6 +18,10 @@ public class Magasin {
 	 private String nom;
 	 private String adresse;
 	 private String geolocalisation;
+	 
+	 @OneToMany(mappedBy = "magasin", cascade = CascadeType.ALL)
+	    private List<Coupons> coupons;
+	 
 	public Long getId() {
 		return id;
 	}
@@ -37,6 +45,18 @@ public class Magasin {
 	}
 	public void setGeolocalisation(String geolocalisation) {
 		this.geolocalisation = geolocalisation;
+	}
+	public List<Coupons> getCoupons() {
+		return coupons;
+	}
+	public void setCoupons(List<Coupons> coupons) {
+		this.coupons = coupons;
+	}
+	
+	public static Magasin fromString(String nomMagasin) {
+		Magasin magasin = new Magasin ();
+		magasin.setNom(nomMagasin);
+		return magasin;
 	}
 	 
 }

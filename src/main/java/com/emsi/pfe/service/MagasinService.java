@@ -18,7 +18,7 @@ public class MagasinService {
 	}
 	
 	public Magasin getMagasinById(Long id) {
-		return magasinRepository.findById(id).orElseGet(null);
+		return magasinRepository.findById(id).orElse(null);
 	}
 
 	public Magasin createMagasin(Magasin magasin) {
